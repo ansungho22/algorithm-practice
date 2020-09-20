@@ -1,21 +1,20 @@
 // topcoder problem 8
 #include<iostream>
 #include<stdlib.h>
-#include<algorithm>
 #include <vector>
 #include <queue>
-
-
 
 using namespace std;
 
 class mazemaker
 {
 public:
-	int longestpath(vector<string> maze, int startRow, int startCol, vector<int> moveRow, vector<int> moveCol) {
+	int longestpath(vector<string> maze, int startRow, int startCol, vector<int> moveRow, vector<int> moveCol)
+	{
 		int max = 0;
-		int width = maze[0].size(), height = maze.size();
-		int board[50][50];
+		int width = maze[0].size();
+		int height = maze.size();
+		int board[50][50] = { -1 };
 
 		for (int i = 0; i < height; i++)
 		{
@@ -47,6 +46,7 @@ public:
 				}
 			}
 		}
+
 		for (int i = 0; i < height; i++)
 		{
 			for (int j = 0; j < width; j++)
