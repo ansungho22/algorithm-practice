@@ -14,7 +14,7 @@ public:
 		int max = 0;
 		int width = maze[0].size();
 		int height = maze.size();
-		int board[50][50] = { -1 };
+		int board[50][50];
 
 		for (int i = 0; i < height; i++)
 		{
@@ -39,7 +39,8 @@ public:
 			{
 				int nextX = x + moveCol[i], nextY = y + moveRow[i];
 
-				if (0 <= nextX && nextY < width && 0 <= nextY && nextY < height && board[nextY][nextX] == -1 && maze[nextY].substr(nextX, 1) == ".") {
+				if (0 <= nextX && nextX < width && 0 <= nextY && nextY < height && board[nextY][nextX] == -1 && maze[nextY].substr(nextX, 1) == ".")
+				{
 					board[nextY][nextX] = board[y][x] + 1;
 					queueX.push(nextX);
 					queueY.push(nextY);
@@ -56,6 +57,16 @@ public:
 				max = std::max(max, board[i][j]);
 			}
 		}
-
+		return max;
 	}
 };
+
+int main() {
+	vector<string> maze = { "...","...","..." };
+	int startRow = 0;
+	int startCol = 1;
+	vector<int> moveRow = { 1,0,-1,0 };
+	vector<int> moveCol = { 0,1,0,-1 };
+	mazemaker mm;
+	cout << mm.longestpath(maze, startRow, startCol, moveRow, moveCol);
+}
