@@ -5,7 +5,6 @@
 #include <vector>
 
 #include <string>
-
 using namespace std;
 
 int main() {
@@ -14,6 +13,7 @@ int main() {
 	int n = 0;
 	cin >> s;
 	a.push_back(stoi(s));
+	a.back() = 4;
 	for (int i = 0; i < s.size(); i++)
 		if (s[i] == '+')
 			a.back() += stoi(s.substr(i + 1, 6));
