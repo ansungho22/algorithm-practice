@@ -1,68 +1,49 @@
+//น้มุ 2108น๘
 #include<stdio.h>
 #include<stdlib.h>
 #include<vector>
 #include <iostream>
 #include <algorithm>
+#include<math.h>
 using namespace std;
-float one(int* arr,int size) {
-	int sum = 0;
-	for (int i = 0; i < size; i++){
-		sum += arr[i];
-	}
-	return round(sum / size);
-}
-int two(int* arr, int size) {
-	return arr[size / 2];
-}
-int three(int* arr,int size) {
-	int cnt = 1;
-	int temp = arr[0];
-	int ans = 0;
-	int pos = 0;
-	for (int i = 1; i < size; i++){
-		if (temp == arr[i]) cnt++;
-		else {
-			temp = arr[i];
-			if (ans < cnt) {
-				pos = i - 1;
-				ans = cnt;
-			}
-			cnt = 1;
-		}
-	}
-	if (size == 1) return arr[0];
-	return arr[pos];
-}
-int four(int* arr,int size) {
-	return (arr[size - 1] - arr[0]);
-}
-void switching(int *arr,int i,int j) {
-	int temp = 0;
-	temp = arr[i] ;
-	arr[i] = arr[j];
-	arr[j] = temp;
-} 
+
 int main() {
-	int input = 0;
-	int size = 0;
-	int temp = 0;
-	cin >> size;
-	int *arr = new int[size];
-	for (int i = 0; i < size; i++){
-		cin >> input;
-		arr[i] = input;
-	}
-	for (int i = 0; i < size; i++){
-		for (int j = 0; j < size; j++)
-		{
-			if (arr[i] < arr[j]) {
-				switching(arr, i, j);
-			}
+	int N,temp,Sum=0,mx=-1,mode;
+	int arr[8001] = { 0, };
+	cin >> N;
+	vector<int> v,mode_v;
+	for (int i = 0; i < N; i++)
+	{
+		cin >> temp;
+		v.push_back(temp);
+		Sum += temp;
+		temp = (temp <= 0) ? abs(temp) : temp + 4000;
+		arr[temp]++;
+		if (arr[temp] > mx) {
+			mx = arr[temp];
+			mode = temp;
 		}
 	}
-	cout << one(arr, size) << endl;
-	cout << two(arr, size) << endl;
-	cout << three(arr, size) << endl;
-	cout << four(arr, size) << endl;
-	
+	for (int i = 4001; i <= 8001; i++) {
+		if (arr[i] == mx) {
+			mode = i;
+			mode = (mode <= 4000) ? -mode : mode - 4000;
+			mode_v.push_back(mode);
+		}
+	}
+	for (int i = 4000; i >=0; i--) {
+		if (arr[i] == mx) {
+			mode = i;
+			mode = (mode <= 4000) ? -mode : mode - 4000;
+			mode_v.push_back(mode);
+		}
+	}
+
+	mode = (mode_v.size() >= 2) ? mode_v[1] : mode_v[0];
+	sort(v.begin(),v.end());
+	cout << (int)floor((Sum / N)+0.5) << endl;
+	cout << v[N / 2] << endl;
+	cout << mode << endl;
+	cout << v.back() - v.front() << endl;
+
 }
