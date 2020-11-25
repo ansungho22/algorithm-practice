@@ -9,11 +9,11 @@ int main() {
 	int fromid[] = { 1,2,4,5,3,3,1,0 };
 	int toid[] = { 0,1,2,4,2,5,3,1 };
 
-	int total=0;
-	for (int i = 0; i < sizeof(fromid)/sizeof(int); i++)
+	int total = 0;
+	for (int i = 0; i < sizeof(fromid) / sizeof(int); i++)
 	{
 		total = bottles[fromid[i]] + bottles[toid[i]];
-		if (capacities[toid[i]] > total  ) {
+		if (capacities[toid[i]] > total) {
 			bottles[fromid[i]] = 0;
 			bottles[toid[i]] = total;
 		}
