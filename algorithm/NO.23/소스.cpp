@@ -6,7 +6,7 @@
 using namespace std;
 int arr[10][10];
 int ans = 0;
-int cnt;
+int cnt = 0;
 void search(int x, int y) {
     if (arr[x][y] == 1) {
         cnt++;
