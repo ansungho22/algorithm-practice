@@ -34,3 +34,43 @@ while True :
    T -= 1
 for i in range(0,len(ans),2):
     print(ans[i]," ",ans[i+1])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
