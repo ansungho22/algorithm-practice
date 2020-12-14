@@ -4,7 +4,7 @@
 using namespace std;
 const int MAX = 100000;
 pair<pair<string, int>, pair<int, int>> student[MAX];
-bool cmp(pair<pair<string, int>, pair<int, int>> a, pair<pair<string, int>, pair<int, int>> b)
+bool compare(pair<pair<string, int>, pair<int, int>> a, pair<pair<string, int>, pair<int, int>> b)
 {
     if (a.first.second > b.first.second) {
         return true;
@@ -33,7 +33,7 @@ int main(void)
     for (int i = 0; i < N; i++) {
         cin >> student[i].first.first >> student[i].first.second >> student[i].second.first >> student[i].second.second;
     }
-    sort(student, student + N, cmp);
+    sort(student, student + N, compare);
     for (int i = 0; i < N; i++) {
         cout << student[i].first.first << "\n";
     }
