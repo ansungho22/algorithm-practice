@@ -4,23 +4,28 @@
 #include <string>
 using namespace std;
 int check[51] = { 0, };
-void dp(vector<string> relations) {
-	int NumOfPeople = relations.size();
-	for (int i = 0; i < NumOfPeople; i++){
-		if (relations[i].find("Y") == string::npos) check[i] = 1;
-	}
-	for (int i = 0; i < NumOfPeople; i++)
-	{
-		if (check[i] == 0) {
-			for (int i = 0; i < relations[i].length; i++)
-			{
-				
+int dp(vector<string> relations, int sqe) {
+	int ans = 0;
+	if (check[sqe] == 0) {
+		string str = relations[sqe];
+		for (int i = 0; i < str.length(); i++){
+			if (str[i] == 'Y') {
+				ans += dp(relations, i);
 			}
 		}
+		if (ans == 0)ans = 1;
+		check[sqe] = ans;
 	}
-
+	return check[sqe];
+}
+int solution(vector<string> relations) {
+	int ans = 0;
+	for (int i = 0; i < relations.size(); i++){
+		ans += dp(relations, i);
+	}
+	return ans;
 }
 int main() {
 	vector<string> relations = { "NNYN","NNYN","NNNN","NYYN" };
-	dp(relations);
+	cout << solution(relations);
 }
