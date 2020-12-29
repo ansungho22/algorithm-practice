@@ -5,26 +5,22 @@
 #include<stack>
 #include<math.h>
 using namespace std;
-
 vector<int> solution(vector<int> progresses, vector<int> speeds) {
 	vector<int> answer;
-	for (int i = 0; i < progresses.size(); i++)
-	{
+	for (int i = 0; i < progresses.size(); i++){
 		progresses[i] = (int)ceil((double)(100 - progresses[i])/(double)speeds[i]);
 	}
-	int max=progresses.front();
+	int max_day=progresses.front();
 	int cnt = 0;
-	for (int i = 0; i < progresses.size(); i++)
-	{
-		if (progresses[i] > max) {
+	for (int i = 0; i < progresses.size(); i++){
+		if (progresses[i] > max_day) {
 			answer.push_back(cnt);
 			cnt = 1;
-			max = progresses[i];
+			max_day = progresses[i];
 			continue;
 		}
 		cnt++;
 	}
 	answer.push_back(cnt);
-	
     return answer;
 }
