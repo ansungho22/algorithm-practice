@@ -1,35 +1,34 @@
 //프로그래머스 다리를 지나는 트럭
 #include <string>
 #include <vector>
-#include <stack>
+#include <queue>
 using namespace std;
 
 int solution(int bridge_length, int weight, vector<int> truck_weights) {
 	int ans = 0;
+	queue<int> q;
+	int index = 0;
 	int current_weight = 0;
-	int current_move_truck = 0;
-	for (int i = 0; i < truck_weights.size(); i++) {
-		current_weight += truck_weights[i];
-		if (current_weight > weight ) {
-			ans += (current_move_truck - 1) * 1 + bridge_length;
-			current_move_truck = 0;
-			current_move_truck++;
-			current_weight = truck_weights[i];
+	while (1) {
+		if (index == truck_weights.size()) {
+			ans += bridge_length;
+			break;
+		}
+		ans++;
+
+		if (q.size() == bridge_length) {
+			current_weight -= q.front();
+			q.pop();
+		}
+		if (current_weight + truck_weights[index] <= weight) {
+			current_weight += truck_weights[index];
+			q.push(truck_weights[index]);
+			index++;
 		}
 		else {
-			current_move_truck++;
+			q.push(0);
 		}
 	}
-	if (current_move_truck != 0) {
-		ans += (current_move_truck - 1) * 1 + bridge_length;
-	}
-	ans++;
-
 	return ans;
-}
-int main() {
-	int bridge_length = 5;
-	int weight = 5;
-	vector<int> truck_weights = { 2, 2, 2, 2, 1, 1, 1, 1, 1 };
-	solution(bridge_length, weight, truck_weights);
+
 }
