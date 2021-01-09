@@ -10,8 +10,10 @@ int board[20][20] = { 0, };
 bool visit[20][20] = { false, };
 struct compare {
 	bool operator()(pair<pair<int, int>, int> a, pair<pair<int, int>, int> b) {
-		if (a.second == b.second) {
-			if (a.first.first == b.first.first) {
+		if (a.second == b.second)
+		{
+			if (a.first.first == b.first.first)
+			{
 				return a.first.second > b.first.second;
 			}
 			return a.first.first > b.first.first;
