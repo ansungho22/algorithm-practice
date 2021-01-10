@@ -8,7 +8,7 @@ using namespace std;
 vector<int> solution(vector<int> array, vector<vector<int>> commands) {
     vector<int> answer;
     for (auto i : commands) {
-        int start = i[0]-1;
+        int start = i[0] - 1;
         int end = i[1];
         int num = i[2] - 1;
         vector<int> v;
