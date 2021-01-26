@@ -1,6 +1,7 @@
 //입국심사
 #include <string>
 #include <vector>
+#include <iostream>
 using namespace std;
 
 long long solution(int n, vector<int> times) {
@@ -24,4 +25,9 @@ long long solution(int n, vector<int> times) {
 		}
 	}
 	return answer;
+}
+int main() {
+	int n = 6;
+	vector<int> times = { 7,10 };
+	cout << solution(n, times);
 }
