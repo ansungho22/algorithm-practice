@@ -39,3 +39,4 @@ int main() {
 	vector<string> s = { "NYY","YNY","YYN"};
 	cout << highestScore(s);
 }
+//테스트용 
