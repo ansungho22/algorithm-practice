@@ -9,7 +9,7 @@ int solution(vector<int> a, vector<int> b) {
 	for (int i = 0; i < a.size(); i++)
 	{
 		int a_mul_b = a[i] * b[i];
-		answer += a_plus_b;
+		answer += a_mul_b;
 	}
     return answer;
 }
