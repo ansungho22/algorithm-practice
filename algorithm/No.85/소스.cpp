@@ -28,9 +28,11 @@ long long solution(string expression) {
 			num += expression[i];
 		}
 	}
+
 	nums.push_back(stoi(num));
-	do { //연산자 우선순위에 맞춰 계산
-		vector <long long>  temp_nums = nums;
+
+	do {
+		vector <long long> temp_nums = nums;
 		vector <char> temp_operators = operators;
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < temp_operators.size(); j++) {
