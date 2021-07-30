@@ -9,25 +9,27 @@ int solution(string s) {
     int answer = s.size();
 
     for (int i = 1; i <= s.size() / 2; i++) {
-        string convert, temp;
+        string StrConvert, Temp;
 
         int cnt = 1;
-        temp = s.substr(0, i);
+        Temp = s.substr(0, i);
 
         for (int j = i; j < s.size(); j += i) {
-            if (temp == s.substr(j, i)) cnt++;
+            if (Temp == s.substr(j, i)) cnt++;
             else {
-                if (cnt > 1) convert += to_string(cnt);
-                convert += temp;
-                temp = s.substr(j, i);
+                if (cnt > 1) {
+                    StrConvert += to_string(cnt);
+                }
+                StrConvert += Temp;
+                Temp = s.substr(j, i);
                 cnt = 1;
             }
         }
 
-        if (cnt > 1) convert += to_string(cnt);
+        if (cnt > 1) StrConvert += to_string(cnt);
 
-        convert += temp;
-        answer = max(answer, int(convert.size()));
+        StrConvert += Temp;
+        answer = min(answer, int(StrConvert.size()));
     }
     return answer;
 }
