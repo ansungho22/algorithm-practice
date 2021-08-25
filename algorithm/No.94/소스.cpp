@@ -1,82 +1,95 @@
 #include <string>
-#include <vector>
-#include <algorithm>
-#include <iostream>
+#include <vector> 
+#include <cstring>
 using namespace std;
 
-string answer = "";
-int dx[4] = { 0, 0, 1, -1 };
-int dy[4] = { 1, -1, 0, 0 };
+struct pos {
+	int x, y; 
+};
 
-vector<string> TileRefresh(char Tile, vector<string> board) {
-	vector<string> NewBoard = board;
-	if (Tile == '0') return NewBoard;
-	answer += Tile;
-	for (int i = 0; i < board.size(); i++)
-	{
-		for (int j = 0; j < board[i].size(); j++)
-		{
-			if (board[i][j] == Tile)NewBoard[i][j] = '.';
-		}
-	}
-	return NewBoard;
-}
+int M, N;
 
-char TilesStuck(vector<string> board, int m, int n) {
-	vector<char> RemoveTilesList;
-	for (int i = 0; i < m; i++)
+vector<string> m_board;
+vector<vector<pos>> alpha_pos;
+
+int dr_x[] = { 0, 1, 0, -1 };
+int dr_y[] = { 1, 0, -1, 0 };
+
+bool reachable(char c, pos from, pos to)
+{
+	for (int i = 0; i < 4; ++i)
 	{
-		for (int j = 0; j < n; j++)
+		int nx = from.x + dr_x[i];
+		int ny = from.y + dr_y[i];
+		while (!(nx < 0 || nx >= M || ny < 0 || ny >= N))
 		{
-			for (int h = 0; h < 4; h++)
+			if (nx == to.x && ny == to.y) return true;
+			if (m_board[nx][ny] != '.') break; 
+			for (int j = ((i + 1) % 2); j < 4; j += 2)
 			{
-				if (board[i][j] == '.' || board[i][j] == '*')
+				int nnx = nx + dr_x[j];
+				int nny = ny + dr_y[j];
+				while (!(nnx < 0 || nnx >= M || nny < 0 || nny >= N))
 				{
-					continue;
+					if (nnx == to.x && nny == to.y) return true; 
+					if (m_board[nnx][nny] != '.') break;
+					nnx += dr_x[j]; 
+					nny += dr_y[j];
 				}
-				if (
-					((i + dy[h] >= 0) && (i + dy[h] < m)) &&
-					((j + dx[h] >= 0) && (j + dx[h] < n)) &&
-					board[i][j] == board[i + dy[h]][j + dx[h]]
-				   )
+			}
+			nx += dr_x[i];
+			ny += dr_y[i];
+		}
+	} return false;
+}
+bool game(string& answer, int alpha_cnt)
+{
+	while (true) 
+	{
+		bool match = false;
+		for (int i = 0; i < 26; ++i) 
+		{
+			if (!alpha_pos[i].empty()) 
+			{
+				char c = i + 'A';
+				pos from = alpha_pos[i][0];
+				pos to = alpha_pos[i][1];
+				if (reachable(c, from, to)) 
 				{
-					RemoveTilesList.push_back(board[i][j]);
-					board[i][j] = '.';
-					board[i + dy[h]][j + dx[h]] = '.';
+					answer += c;
+					m_board[from.x][from.y] = '.';
+					m_board[to.x][to.y] = '.';
+					alpha_pos[i].clear();
+					match = true;
+					alpha_cnt -= 2;
+					break;
 				}
 			}
 		}
+		if (!match) break;
 	}
-	sort(RemoveTilesList.begin(), RemoveTilesList.end());
-	if (RemoveTilesList.empty())return '0';
-
-	return RemoveTilesList.front();
+	return (alpha_cnt == 0);
 }
-
-char TilesOff(vector<string> board, int m, int n) {
-	vector<string> RemoveTilesList;
-	for (int i = 0; i < m; i++)
+string solution(int m, int n, vector<string> board)
+{
+	M = m;
+	N = n;
+	m_board = board;
+	alpha_pos = vector<vector<pos>>(26);
+	int alpha_cnt = 0;
+	for (int i = 0; i < M; ++i)
 	{
-		for (int j = 0; j < n; j++)
+		for (int j = 0; j < N; ++j)
 		{
-			for (int h = 0; h < 4; h++)
+			if (isalpha(board[i][j]))
 			{
-				if (board[i][j] == '.' || board[i][j] == '*')
-				{
-					continue;
-				}
-
+				alpha_cnt++;
+				alpha_pos[board[i][j] - 'A'].push_back({ i, j });
 			}
 		}
 	}
-
-
-	return 0;
+	string answer = "";
+	if (game(answer, alpha_cnt)) return answer;
+	return "IMPOSSIBLE";
 }
 
-string solution(int m, int n, vector<string> board) {
-	vector<string> Tile = board;
-	Tile = TileRefresh(TilesStuck(board, m, n), Tile);
-	if (answer == "")answer = "IMPOSSIBLE";
-	return answer;
-}
