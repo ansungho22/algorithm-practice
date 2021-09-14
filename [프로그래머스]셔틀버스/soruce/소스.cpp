@@ -30,16 +30,6 @@ string int_to_time(int n) {
 
 	return str_hour + ':' + str_minute;
 }
-vector<int> bus_timetable(int n, int t) {
-	vector<int> timetable;
-	int time = 540;
-	for (int i = 0; i < n; i++)
-	{
-		timetable.push_back(time);
-		time += t;
-	}
-	return timetable;
-}
 vector<int> crew_timetable(vector<string> timetable) {
 	vector<int> crewtimetable;
 	for (auto time : timetable) {
